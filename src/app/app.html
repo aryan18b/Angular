@@ -1,0 +1,9 @@
+<app-header></app-header>
+
+<button class="toggle-button" (click)="togglePosts()">{{showPosts ? 'Hide Posts' : 'Show Posts'}}</button>
+
+@if (showPosts) {
+    <app-blog-list></app-blog-list>
+}
+
+<app-footer></app-footer>

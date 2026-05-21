@@ -1,0 +1,9 @@
+<h2>Blog Posts</h2>
+<!-- <input class="search-input" type="text" placeholder="Search posts" [value]="searchText" (input)="searchText = $event.target.value"> -->
+<input class="search-input" type="text" placeholder="Search posts" [(ngModel)]="searchText">
+
+<div class="post-list">
+    @for (post of filteredPosts(); track post.id) {
+        <app-blog-card [title]="post.title" [body]="post.body" [(likes)]="post.likes"></app-blog-card>
+    }
+</div>
