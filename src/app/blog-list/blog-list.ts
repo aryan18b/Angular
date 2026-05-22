@@ -1,53 +1,63 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { BlogCard } from '../blog-card/blog-card';
 import { FormsModule } from '@angular/forms';
+import { BlogListService } from './blog-list.service';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-blog-list',
-  imports: [BlogCard, FormsModule],
+  imports: [BlogCard, FormsModule, CommonModule],
   templateUrl: './blog-list.html',
   styleUrl: './blog-list.css',
 })
 export class BlogList implements OnInit, OnDestroy{
+  constructor(
+    private blogListService: BlogListService,
+    private cdr: ChangeDetectorRef
+  ){}
   searchText = '';
 
-  filteredPosts() {
-    return this.posts.filter(post => post.title.toLocaleLowerCase().includes(this.searchText.toLocaleLowerCase()));
-  }
-  intervalId?: number;
-  posts = [
-    {
-      id: 1,
-      title: 'First Post',
-      body: 'This is the first post',
-      likes: 7
-    },
-    {
-      id: 2,
-      title: 'Second Post',
-      body: 'This is the second post',
-      likes: 5
-    },
-    { id: 3,
-      title: 'Third Post',
-      body: 'This is the third post',
-      likes: 9
-    },
+  // get filteredPosts() {
+  //   return this.posts.filter(post => post.title.toLocaleLowerCase().includes(this.searchText.toLocaleLowerCase()));
+  // }
 
-  ];
-  
+  filterPosts(posts: any[]): any[] {
+    if (!this.searchText.trim()) {
+      return posts;
+    }
+
+    return posts.filter(post => post.title.toLocaleLowerCase().includes(this.searchText.toLocaleLowerCase()));
+  }
+
+  intervalId?: number;
+  posts$!: Observable<any[]>;
+  filteredPosts$!: Observable<any[]>;
+
   onPostLike(title: string): void {
     alert(`${title} liked`);
   }
 
   ngOnInit(): void {
     console.log("component initialized");
-    this.intervalId = setInterval(() => console.log("Fetching posts"), 2000);
+    // this.loadPosts();
+    this.posts$ = this.blogListService.getPosts();
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.intervalId);
     console.log("cleaning up...component destroyed");
   }
 
+  // loadPosts(): void{
+  //   this.blogListService.getPosts().subscribe({
+  //     next: (data) => {
+  //       this.posts = data;
+  //       this.cdr.detectChanges();
+  //       console.log(this.posts);
+  //     },
+  //     error: (err) => {
+  //       console.error('Failed to fetch posts', err);
+  //     }
+  //   });
+  // }
 }
