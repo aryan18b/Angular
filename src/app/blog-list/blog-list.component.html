@@ -2,16 +2,19 @@
 
 <input class="search-input" type="text" placeholder="Search posts" [(ngModel)]="searchText">
 
-<button (click)="togglePosts()">
-  {{ showPosts ? 'Hide' : 'Show' }} Posts
-</button>
+<p *ngIf="loading$ | async">Loading blogs...</p>
 
-<div *ngIf="showPosts">
+<p *ngIf="error$ | async as error">Error in loading blogs : {{error}} </p>
+
+<div *ngIf="blogs$ | async as blogList">
+
+    <button (click)="togglePosts()">
+        {{ showPosts ? 'Hide' : 'Show' }} Posts
+    </button>
     
-    <div class="post-list">
-        
-        <app-blog-card *ngFor="let post of filteredPosts" [title]="post.title" [body]="post.body"></app-blog-card>
-        
-    </div>   
-    
-</div>
+    <div *ngIf="showPosts">
+        <div class="post-list">
+            <app-blog-card *ngFor="let blog of blogList" [title]="blog.title" [body]="blog.body"></app-blog-card>
+        </div>   
+    </div>
+</div> 
