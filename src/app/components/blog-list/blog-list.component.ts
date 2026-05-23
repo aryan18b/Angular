@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BlogService } from '../services/blog.service';
+import { BlogService } from '../../services/blog.service';
 import { BehaviorSubject, catchError, delay, finalize, Observable, of } from 'rxjs';
 
 @Component({
