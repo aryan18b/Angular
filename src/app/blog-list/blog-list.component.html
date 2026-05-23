@@ -1,0 +1,17 @@
+<h2>Blog Posts</h2>
+
+<input class="search-input" type="text" placeholder="Search posts" [(ngModel)]="searchText">
+
+<button (click)="togglePosts()">
+  {{ showPosts ? 'Hide' : 'Show' }} Posts
+</button>
+
+<div *ngIf="showPosts">
+    
+    <div class="post-list">
+        
+        <app-blog-card *ngFor="let post of filteredPosts" [title]="post.title" [body]="post.body"></app-blog-card>
+        
+    </div>   
+    
+</div>
