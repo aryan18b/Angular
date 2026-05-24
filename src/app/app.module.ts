@@ -15,6 +15,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { PostsComponent } from './pages/posts/posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BlogDetailComponent } from './components/blog-detail/blog-detail.compon
     HomeComponent,
     PostsComponent,
     NotFoundComponent,
-    BlogDetailComponent
+    BlogDetailComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,

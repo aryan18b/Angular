@@ -1,0 +1,52 @@
+<!-- {{ loginForm.pristine| json }}
+{{ loginForm.dirty| json }}
+{{ loginForm.valid| json }}
+{{ loginForm.invalid| json }}
+{{ loginForm.value| json }} -->
+
+<div *ngIf="loginSuccess" class="alert alert-success">Login success</div>
+
+<form (ngSubmit)="loginUser(loginForm)" #loginForm="ngForm">
+  <div class="form-group">
+    <label for="email">Email:</label><br />
+    <input
+    #emailControl = "ngModel"
+    required
+    email
+    minlength="10"
+    placeholder="abc@email.com"
+      type="text"
+      name="fname"
+      class="form-control"
+      [(ngModel)]="login.email"
+    /><br />
+  </div>
+  <div *ngIf="emailControl.dirty && emailControl.errors?.['required']" class="alert alert-danger">
+    Please enter email
+  </div>
+  <div *ngIf="emailControl.dirty && (emailControl.invalid && !emailControl.errors?.['required'])" class="alert alert-danger">
+    Invalid email
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password:</label><br />
+    <input
+    #passwordControl="ngModel"
+    required
+    minlength="8"
+    maxlength="20"
+    placeholder="Password"
+      type="password"
+      name="password"
+      class="form-control"
+      [(ngModel)]="login.password"
+    /><br />
+  </div>
+  <div *ngIf="passwordControl.dirty && passwordControl.errors?.['required']" class="alert alert-danger">
+    Please enter password
+  </div>
+
+  <div>
+    <button [disabled]="loginForm.invalid" class="btn btn-primary" type="submit">Login</button>
+  </div>
+</form>
